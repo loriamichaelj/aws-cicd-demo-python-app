@@ -15,12 +15,13 @@ prefix only for grouping on GitHub.
 ## Layout
 
 ```
-src/app.py                     no-op entrypoint; prints a build descriptor and exits 0
-tests/test_app.py              unit test exercising describe_build()
-requirements.txt               one real pinned dependency (requests)
-Dockerfile                     multi-stage, non-root, healthchecked
-.dockerignore                  keeps VCS metadata, virtualenvs and caches out of the build context
-.github/workflows/deploy.yml   thin caller: push-to-dev, PR-merge to stage/prod
+src/app.py                       no-op entrypoint; prints a build descriptor and exits 0
+tests/test_app.py                unit test exercising describe_build()
+requirements.txt                 one real pinned dependency (requests)
+Dockerfile                       multi-stage, non-root, healthchecked
+.dockerignore                    keeps VCS metadata, virtualenvs and caches out of the build context
+.github/workflows/deploy.yml     thin caller: push-to-dev, PR-merge to stage/prod
+.github/workflows/rollback.yml   thin caller: manual dispatch, re-points current.json
 ```
 
 ## Dockerfile discipline
