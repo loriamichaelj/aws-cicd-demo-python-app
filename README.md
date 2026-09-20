@@ -15,10 +15,12 @@ prefix only for grouping on GitHub.
 ## Layout
 
 ```
-src/app.py          no-op entrypoint; prints a build descriptor and exits 0
-requirements.txt    one real pinned dependency (requests)
-Dockerfile          multi-stage, non-root, healthchecked
-.dockerignore       keeps VCS metadata, virtualenvs and caches out of the build context
+src/app.py                     no-op entrypoint; prints a build descriptor and exits 0
+tests/test_app.py              unit test exercising describe_build()
+requirements.txt               one real pinned dependency (requests)
+Dockerfile                     multi-stage, non-root, healthchecked
+.dockerignore                  keeps VCS metadata, virtualenvs and caches out of the build context
+.github/workflows/deploy.yml   thin caller: push-to-dev triggers aws-cicd-framework's deploy.yml
 ```
 
 ## Dockerfile discipline
@@ -44,6 +46,7 @@ These are the same commands the pipeline runs, so failures reproduce locally:
 
 ```bash
 python -m compileall -q src
+pip install pytest && pytest -q
 docker build -t python-app:local .
 docker run --rm python-app:local
 hadolint Dockerfile
